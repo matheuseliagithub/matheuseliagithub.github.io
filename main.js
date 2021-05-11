@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "946f716228fa4a044e3d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "57d46a3744638deb95eb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -4544,7 +4544,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "vid1",
       "width": _vm.width,
-      "height": _vm.height
+      "height": _vm.height,
+      "autoplay": "",
+      "playsinline": ""
     }
   }, [_vm._v("Vide can not be displayed")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
