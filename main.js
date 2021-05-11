@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "57d46a3744638deb95eb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "80847bee00ed91dfd5f6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -4539,7 +4539,7 @@ if (true) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('h1', [_vm._v("Weather forecast")]), _vm._v(" "), _c('p', [_vm._v("This component demonstrates fetching data from the server.")]), _vm._v(" "), _c('video', {
+  return _c('div', [_c('h1', [_vm._v("Camera Test")]), _vm._v(" "), _c('p', [_vm._v("VueJS Camera Test")]), _vm._v(" "), _c('video', {
     ref: "videoref",
     attrs: {
       "id": "vid1",
@@ -4548,7 +4548,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Vide can not be displayed")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
