@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a4c50480e16ac21c4700"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3a49b6db83ab4e613515"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1889,6 +1889,9 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             this.cameras = yield this.getVideoDevices();
         });
     }
+    //async mounted() {
+    //    this.cameras = await this.getVideoDevices();
+    //}
     takePhoto() {
         if (!this._hasUserMedia) {
             return;
@@ -1938,6 +1941,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             if (!this.supportsEnumerateDevices)
                 throw new Error("The browser does not support enumerateDevices");
             const devices = yield navigator.mediaDevices.enumerateDevices();
+            console.log(devices);
             return devices.filter(device => device.kind === type);
         });
     }
@@ -4576,7 +4580,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: device.deviceId
     }, [_vm._v("\n                " + _vm._s(device.kind) + " + " + _vm._s(device.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  })), _vm._v(" "), _c('p', [_vm._v("devices: " + _vm._s(_vm.devices))]), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
