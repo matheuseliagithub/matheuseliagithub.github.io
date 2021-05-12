@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3a49b6db83ab4e613515"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a3d91bca044673f7b472"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1889,9 +1889,23 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             this.cameras = yield this.getVideoDevices();
         });
     }
-    //async mounted() {
-    //    this.cameras = await this.getVideoDevices();
-    //}
+    mounted() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.getDevices2()
+                .then(this.gotDevices);
+        });
+    }
+    getDevices2() {
+        return navigator.mediaDevices.enumerateDevices();
+    }
+    gotDevices(devices) {
+        this.sources = [];
+        devices.forEach(device => {
+            if (device.kind === 'videoinput') {
+                this.sources.push(device);
+            }
+        });
+    }
     takePhoto() {
         if (!this._hasUserMedia) {
             return;
@@ -4580,7 +4594,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: device.deviceId
     }, [_vm._v("\n                " + _vm._s(device.kind) + " + " + _vm._s(device.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("devices: " + _vm._s(_vm.devices))]), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  })), _vm._v(" "), _c('p', [_vm._v("devices: " + _vm._s(_vm.devices))]), _vm._v(" "), _c('p', [_vm._v("sources: " + _vm._s(_vm.sources))]), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
