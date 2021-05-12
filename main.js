@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "80847bee00ed91dfd5f6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "36ddb177bf8bb42e34f6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1323,7 +1323,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_2_vue__["default"].use(__WEBPACK_IMPORTED_MODULE_3_vue_router__["default"]);
-var routes = [
+const routes = [
     { path: '/', component: __webpack_require__(34) },
     { path: '/counter', component: __webpack_require__(32) },
     { path: '/fetchdata', component: __webpack_require__(33) },
@@ -1332,7 +1332,7 @@ var routes = [
 new __WEBPACK_IMPORTED_MODULE_2_vue__["default"]({
     el: '#app-root',
     router: new __WEBPACK_IMPORTED_MODULE_3_vue_router__["default"]({ mode: 'history', routes: routes }),
-    render: function (h) { return h(__webpack_require__(30)); }
+    render: h => h(__webpack_require__(30))
 });
 
 
@@ -1806,16 +1806,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1824,13 +1814,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
-var AppComponent = (function (_super) {
-    __extends(AppComponent, _super);
-    function AppComponent() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return AppComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_vue__["default"]));
+let AppComponent = class AppComponent extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+};
 AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__["Component"])({
         components: {
@@ -1850,57 +1835,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
 
-var CameraTestComponent = (function (_super) {
-    __extends(CameraTestComponent, _super);
-    function CameraTestComponent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.width = "400";
-        _this.height = "300";
-        _this._video = null;
-        _this._hasUserMedia = false;
-        _this._ctx = null;
-        _this.photo = null;
-        _this.screenshotFormat = "image/jpeg";
-        return _this;
+let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+    constructor() {
+        super(...arguments);
+        this.width = "400";
+        this.height = "300";
+        this._video = null;
+        this._hasUserMedia = false;
+        this._ctx = null;
+        this.photo = null;
+        this.screenshotFormat = "image/jpeg";
+        /*NEW CODE*/
+        this.cameras = [];
+        this.videoType = "videoinput";
+        /*NEW CODE*/
     }
-    CameraTestComponent.prototype.mounted = function () {
-        var _this = this;
-        navigator.mediaDevices.enumerateDevices()
-            .then(function (devices) {
-            console.log(devices);
-            var filteredDevices = devices.filter(function (device) { return device.kind === "videoinput"; });
-            console.log(filteredDevices);
-        })
-            .catch(function (error) { return console.error('getUserMedia() error:', error); });
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-            .then(function (mediaStream) {
-            _this._video = (_this.$refs.videoref);
-            _this._video.srcObject = mediaStream;
-            _this._video.play();
-            _this._hasUserMedia = true;
-            console.log(mediaStream);
-        })
-            .catch(function (error) { return console.error('getUserMedia() error:', error); });
-    };
-    CameraTestComponent.prototype.takePhoto = function () {
+    /*NEW CODE*/
+    beforeMount() {
+        return __awaiter(this, void 0, void 0, function* () {
+            navigator.mediaDevices.enumerateDevices()
+                .then(devices => {
+                console.log(devices);
+                var filteredDevices = devices.filter(device => device.kind === "videoinput");
+                console.log(filteredDevices);
+            })
+                .catch(error => console.error('getUserMedia() error:', error));
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(mediaStream => {
+                this._video = (this.$refs.videoref);
+                this._video.srcObject = mediaStream;
+                this._video.play();
+                this._hasUserMedia = true;
+                console.log(mediaStream);
+            })
+                .catch(error => console.error('getUserMedia() error:', error));
+            this.cameras = yield this.getVideoDevices();
+        });
+    }
+    takePhoto() {
         if (!this._hasUserMedia) {
             return;
         }
@@ -1909,8 +1897,8 @@ var CameraTestComponent = (function (_super) {
         console.log(canvas);
         console.log(this.screenshotFormat);
         console.log(document.getElementById("img1"));
-    };
-    CameraTestComponent.prototype.getCanvas = function () {
+    }
+    getCanvas() {
         if (!this._hasUserMedia) {
             return null;
         }
@@ -1924,9 +1912,67 @@ var CameraTestComponent = (function (_super) {
             return canvas;
         }
         return null;
-    };
-    return CameraTestComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_vue__["default"]));
+    }
+    /*NEW CODE*/
+    getVideoDevices() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const devices = yield navigator.mediaDevices.enumerateDevices();
+                return (yield this.getDevices(this.videoType))
+                    .map(device => {
+                    const isFront = this.checkIsFront(device);
+                    const isBack = this.checkIsBack(device);
+                    console.log(isFront);
+                    console.log(isBack);
+                    return Object.assign({}, device, { isFront, isBack });
+                });
+            }
+            catch (error) {
+                return error;
+            }
+        });
+    }
+    getDevices(type) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.supportsEnumerateDevices)
+                throw new Error("The browser does not support enumerateDevices");
+            const devices = yield navigator.mediaDevices.enumerateDevices();
+            return devices.filter(device => device.kind === type);
+        });
+    }
+    supportsUserMedia() {
+        return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+    }
+    supportsEnumerateDevices() {
+        return !!(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices);
+    }
+    get hasMultipleCameras() {
+        return this.cameras.length > 1;
+    }
+    getInactiveCameras() {
+        console.log(this.cameras.filter(camera => !camera.active));
+        return this.cameras.filter(camera => !camera.active);
+    }
+    switchCamera() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log('switchCamera');
+        });
+    }
+    checkIsBack(device) {
+        const isBack = device.label.includes("back");
+        const isRear = device.label.includes("rear");
+        const isEnvironment = device.label.includes("environment");
+        const isSecond = device.label.includes("1");
+        return isBack || isRear || isEnvironment || isSecond;
+    }
+    checkIsFront(device) {
+        const isFront = device.label.includes("front");
+        const isFacing = device.label.includes("facing");
+        const isUser = device.label.includes("user");
+        const isFirst = device.label.includes("0");
+        return isFront || isFacing || isUser || isFirst;
+    }
+};
 CameraTestComponent = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__["Component"]
 ], CameraTestComponent);
@@ -1942,16 +1988,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1960,18 +1996,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
-var CounterComponent = (function (_super) {
-    __extends(CounterComponent, _super);
-    function CounterComponent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.currentcount = 0;
-        return _this;
+let CounterComponent = class CounterComponent extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+    constructor() {
+        super(...arguments);
+        this.currentcount = 0;
     }
-    CounterComponent.prototype.incrementCounter = function () {
+    incrementCounter() {
         this.currentcount++;
-    };
-    return CounterComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_vue__["default"]));
+    }
+};
 CounterComponent = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__["Component"]
 ], CounterComponent);
@@ -1987,16 +2020,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2005,23 +2028,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
-var FetchDataComponent = (function (_super) {
-    __extends(FetchDataComponent, _super);
-    function FetchDataComponent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.forecasts = [];
-        return _this;
+let FetchDataComponent = class FetchDataComponent extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+    constructor() {
+        super(...arguments);
+        this.forecasts = [];
     }
-    FetchDataComponent.prototype.mounted = function () {
-        var _this = this;
+    mounted() {
         fetch('api/SampleData/WeatherForecasts')
-            .then(function (response) { return response.json(); })
-            .then(function (data) {
-            _this.forecasts = data;
+            .then(response => response.json())
+            .then(data => {
+            this.forecasts = data;
         });
-    };
-    return FetchDataComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_vue__["default"]));
+    }
+};
 FetchDataComponent = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_property_decorator__["Component"]
 ], FetchDataComponent);
@@ -4548,7 +4567,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('button', {
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.switchCamera
+    }
+  }, [_vm._v("Switch Camera")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Device Info")]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "info"
+    }
+  }, [_c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
