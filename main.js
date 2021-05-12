@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "36ddb177bf8bb42e34f6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a4c50480e16ac21c4700"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1863,6 +1863,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.screenshotFormat = "image/jpeg";
         /*NEW CODE*/
         this.cameras = [];
+        this.devices = [];
         this.videoType = "videoinput";
         /*NEW CODE*/
     }
@@ -1917,7 +1918,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     getVideoDevices() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const devices = yield navigator.mediaDevices.enumerateDevices();
+                this.devices = yield navigator.mediaDevices.enumerateDevices();
                 return (yield this.getDevices(this.videoType))
                     .map(device => {
                     const isFront = this.checkIsFront(device);
@@ -4567,18 +4568,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('button', {
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": _vm.switchCamera
-    }
-  }, [_vm._v("Switch Camera")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Device Info")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Device Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "info"
     }
-  }, [_c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }, [_c('ul', _vm._l((_vm.devices), function(device) {
+    return _c('li', {
+      key: device.deviceId
+    }, [_vm._v("\n                " + _vm._s(device.kind) + " + " + _vm._s(device.label) + "\n            ")])
+  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
