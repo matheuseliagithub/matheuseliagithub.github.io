@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "652787df5b96701fcfa4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a2afde4235fe47e406bd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1887,7 +1887,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 console.log(mediaStream);
             })
                 .catch(error => console.error('getUserMedia() error:', error));
-            this.cameras = yield this.getVideoDevices();
         });
     }
     mounted() {
@@ -1916,8 +1915,11 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         console.log(document.getElementById("img1"));
     }
     reload() {
-        this.getDevices2()
-            .then(this.gotDevices);
+        return __awaiter(this, void 0, void 0, function* () {
+            this.getDevices2()
+                .then(this.gotDevices);
+            this.cameras = yield this.getVideoDevices();
+        });
     }
     getCanvas() {
         if (!this._hasUserMedia) {
@@ -4596,7 +4598,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.reload
     }
-  }, [_vm._v("Reload Video Device Info")]), _vm._v(" "), _c('h1', [_vm._v("Device Info")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Load Devices Info")]), _vm._v(" "), _c('h1', [_vm._v("All Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "info"
     }
@@ -4604,7 +4606,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: device.deviceId
     }, [_vm._v("\n                " + _vm._s(device.kind) + " + " + _vm._s(device.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("devices: " + _vm._s(_vm.devices))]), _vm._v(" "), _c('p', [_vm._v("sources: " + _vm._s(_vm.sources))]), _vm._v(" "), _c('ul', _vm._l((_vm.sources), function(source) {
+  })), _vm._v(" "), _c('p', [_vm._v("devices: " + _vm._s(_vm.devices))])]), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "videoinfo"
+    }
+  }, [_c('p', [_vm._v("sources: " + _vm._s(_vm.sources))]), _vm._v(" "), _c('ul', _vm._l((_vm.sources), function(source) {
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
