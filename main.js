@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7b2742697d35bdb2b23c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "952f0a3fdbb071aa3901"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1865,6 +1865,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.cameras = [];
         this.devices = [];
         this.videoType = "videoinput";
+        this.userLang = "";
         this.sources = [];
         /*NEW CODE*/
     }
@@ -1891,6 +1892,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     }
     mounted() {
         return __awaiter(this, void 0, void 0, function* () {
+            this.userLang = navigator.language;
         });
     }
     getDevices2() {
@@ -4614,7 +4616,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("userLang: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
