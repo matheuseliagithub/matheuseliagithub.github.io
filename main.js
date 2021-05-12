@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a2afde4235fe47e406bd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7b2742697d35bdb2b23c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1983,17 +1983,17 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         });
     }
     checkIsBack(device) {
-        const isBack = device.label.includes("back");
-        const isRear = device.label.includes("rear");
-        const isEnvironment = device.label.includes("environment");
-        const isSecond = device.label.includes("1");
+        const isBack = device.label.toLocaleLowerCase().includes("back");
+        const isRear = device.label.toLocaleLowerCase().includes("rear");
+        const isEnvironment = device.label.toLocaleLowerCase().includes("environment");
+        const isSecond = device.label.toLocaleLowerCase().includes("1");
         return isBack || isRear || isEnvironment || isSecond;
     }
     checkIsFront(device) {
-        const isFront = device.label.includes("front");
-        const isFacing = device.label.includes("facing");
-        const isUser = device.label.includes("user");
-        const isFirst = device.label.includes("0");
+        const isFront = device.label.toLocaleLowerCase().includes("front");
+        const isFacing = device.label.toLocaleLowerCase().includes("facing");
+        const isUser = device.label.toLocaleLowerCase().includes("user");
+        const isFirst = device.label.toLocaleLowerCase().includes("0");
         return isFront || isFacing || isUser || isFirst;
     }
 };
