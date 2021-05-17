@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f0bb3716576a3098c312"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ecefd918bfbe8ba1286a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1862,40 +1862,38 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.photo = null;
         this.screenshotFormat = "image/jpeg";
         this.cameras = [];
-        this.devices = [];
         this.videoType = "videoinput";
         this.userLang = "";
         this.sources = [];
+        this.devices = [];
         this.defaultMediaStreamConstraints = {
-            video: true
+            video: true,
+            audio: false
         };
         this.selected = null;
         this.videoDevices = [];
+        this.deviceId = "";
+        this.defaultDevice = null;
         /*NEW CODE*/
     }
     beforeMount() {
-        return __awaiter(this, void 0, void 0, function* () {
-            navigator.mediaDevices.enumerateDevices()
-                .then(devices => {
-                console.log(devices);
-                var filteredDevices = devices.filter(device => device.kind === "videoinput");
-                /*  this.videoDevices = filteredDevices*/
-            })
-                .catch(error => console.error('getUserMedia() error:', error));
-            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-                .then(mediaStream => {
-                this._video = (this.$refs.videoref);
-                this._video.srcObject = mediaStream;
-                this._video.play();
-                this._hasUserMedia = true;
-            })
-                .catch(error => console.error('getUserMedia() error:', error));
+        this.getVideoDevices()
+            .then(devices => {
+            if (devices.length > 1) {
+                this.defaultDevice = devices.find(device => device.isFront == true);
+            }
         });
+        if (this.defaultDevice) {
+            this.startCamera({
+                constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
+            });
+        }
+        this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
     }
     handleChange(e) {
         if (e.target.options.selectedIndex > -1) {
             console.log('Selected Value:', this.selected);
-            this.switchCameraM(this.selected);
+            this.switchCamera(this.selected);
         }
     }
     mounted() {
@@ -1921,9 +1919,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         }
         var canvas = this.getCanvas();
         this.photo = canvas.toDataURL(this.screenshotFormat);
-        console.log(canvas);
-        console.log(this.screenshotFormat);
-        console.log(document.getElementById("img1"));
     }
     reload() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1950,6 +1945,8 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     /*NEW CODE*/
     getVideoDevices() {
         return __awaiter(this, void 0, void 0, function* () {
+            if (!this.supportsEnumerateDevices)
+                throw new Error("The browser does not support enumerateDevices");
             try {
                 const devices = yield navigator.mediaDevices.enumerateDevices();
                 return devices
@@ -1957,12 +1954,11 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                     .map(device => {
                     const isFront = this.checkIsFront(device);
                     const isBack = this.checkIsBack(device);
-                    console.log(Object.assign({}, device, { isFront, isBack }));
-                    return Object.assign({}, device, { isFront, isBack });
+                    return { deviceId: device.deviceId, isFront, isBack };
                 });
             }
             catch (error) {
-                return error;
+                return Promise.reject(error);
             }
         });
     }
@@ -1975,6 +1971,26 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             return devices.filter(device => device.kind === type);
         });
     }
+    startCamera({ constraints = this.defaultMediaStreamConstraints, retryCount = 10 } = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.supportsUserMedia)
+                throw new Error("The Browser does not support getUserMedia");
+            try {
+                const stream = yield navigator.mediaDevices.getUserMedia(constraints);
+                this._video = (this.$refs.videoref);
+                this._video.srcObject = stream;
+                this._video.play();
+                this._hasUserMedia = true;
+            }
+            catch (error) {
+                if (retryCount > 0) {
+                    console.warn(`Error ${error.message}... retrying once more`);
+                    return this.startCamera({ constraints, retryCount: retryCount - 1 });
+                }
+                return Promise.reject(error);
+            }
+        });
+    }
     supportsUserMedia() {
         return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     }
@@ -1984,52 +2000,23 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     get hasMultipleCameras() {
         return this.cameras.length > 1;
     }
-    //getInactiveCameras() {
-    //    console.log(this.cameras.filter(camera => !camera.active)); 
-    //    return this.cameras.filter(camera => !camera.active);
-    //}
-    switchCamera() {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log('switchCamera');
-        });
-    }
-    switchCameraM(deviceId) {
+    switchCamera(deviceId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log(deviceId);
                 yield this.stopCamera();
-                console.log('stopCamera');
             }
             catch (error) {
                 return Promise.reject(error);
             }
             try {
                 if (deviceId) {
-                    console.log('deviceId');
-                    console.log(deviceId);
                     yield this.startCamera({
                         constraints: { video: { deviceId: { exact: deviceId } } }
                     });
                 }
             }
             catch (error) {
-                return Promise.reject(error);
-            }
-        });
-    }
-    startCamera({ constraints = this.defaultMediaStreamConstraints, retryCount = 10 } = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.supportsUserMedia)
-                throw new Error("The Browser does not support getUserMedia");
-            try {
-                const stream = yield navigator.mediaDevices.getUserMedia(constraints);
-                this._video.srcObject = stream;
-            }
-            catch (error) {
-                if (retryCount > 0) {
-                    console.warn(`Error ${error.message}... retrying once more`);
-                    return this.startCamera({ constraints, retryCount: retryCount - 1 });
-                }
                 return Promise.reject(error);
             }
         });
