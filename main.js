@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cf6222c62403f6aa000c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a71069fda1f56b4ff793"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1873,7 +1873,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.deviceId = "";
         this.defaultDevice = null;
         this.deviceslength = 0;
-        this.hasdefaultDevice = true;
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1890,7 +1889,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 });
             });
             this.getEnumerateDevices()
-                .then(this.PopulateDropBox);
+                .then(this.populateDropBox);
             this.userLang = navigator.language;
         });
     }
@@ -1903,7 +1902,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     getEnumerateDevices() {
         return navigator.mediaDevices.enumerateDevices();
     }
-    PopulateDropBox(devices) {
+    populateDropBox(devices) {
         this.sources = [];
         devices.forEach(device => {
             if (device.kind === 'videoinput') {
@@ -1960,6 +1959,35 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 this._video.srcObject = stream;
                 this._video.play();
                 this._hasUserMedia = true;
+                const videoTracks = stream.getVideoTracks();
+                console.log(`Using video device: ${videoTracks[0].label}`);
+                const [track] = stream.getVideoTracks();
+                const settings = track.getSettings();
+                console.log(`Using settings:`, settings);
+                const capabilities = track.getCapabilities();
+                console.log(`capabilities:`, capabilities);
+                for (const ptz of ['pan', 'tilt', 'zoom']) {
+                    // Check whether camera supports pan/tilt/zoom.
+                    if (!(ptz in settings)) {
+                        console.log(`Camera does not support ${ptz}.`);
+                        continue;
+                    }
+                    const input = document.querySelector(`input[name=${ptz}]`);
+                    input.min = capabilities[ptz].min;
+                    input.max = capabilities[ptz].max;
+                    input.step = capabilities[ptz].step;
+                    input.value = settings[ptz];
+                    input.disabled = false;
+                    input.oninput = (event) => __awaiter(this, void 0, void 0, function* () {
+                        try {
+                            const constraints = { advanced: [{ [ptz]: input.value }] };
+                            yield track.applyConstraints(constraints);
+                        }
+                        catch (err) {
+                            console.error('applyConstraints() failed: ', err);
+                        }
+                    });
+                }
             }
             catch (error) {
                 if (retryCount > 0) {
@@ -4620,7 +4648,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('p', [_vm._v("Select Camera:")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('p', [_vm._v("Select Camera:")]), _vm._v(" "), _c('div', {
     staticClass: "select"
   }, [_c('select', {
     directives: [{
@@ -4654,7 +4682,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("userLang: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("defaultDevice: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("deviceslength: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("hasdefaultDevice: " + _vm._s(_vm.hasdefaultDevice))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
@@ -4670,7 +4698,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.takePhoto
     }
   }, [_vm._v("Take Photo")])])
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "label"
+  }, [_vm._v("Pan:")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "name": "pan",
+      "type": "range",
+      "disabled": ""
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "label"
+  }, [_vm._v("Tilt:")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "name": "tilt",
+      "type": "range",
+      "disabled": ""
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "label"
+  }, [_vm._v("Zoom:")]), _vm._v(" "), _c('input', {
+    attrs: {
+      "name": "zoom",
+      "type": "range",
+      "disabled": ""
+    }
+  })])
+}]}
 module.exports.render._withStripped = true
 if (true) {
   module.hot.accept()
