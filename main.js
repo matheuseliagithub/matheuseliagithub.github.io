@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9318612e66e9b4e96032"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d9aff1355d964036e254"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1896,7 +1896,9 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                     constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
                 });
             }
-            this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
+            else {
+                this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
+            }
             this.userLang = navigator.language;
         });
     }
