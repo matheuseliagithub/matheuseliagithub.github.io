@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d9aff1355d964036e254"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "01bd3a1f032cabf45fea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1875,7 +1875,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.deviceId = "";
         this.defaultDevice = null;
         this.deviceslength = 0;
-        this.hasdefaultDevice = false;
+        this.hasdefaultDevice = true;
         /*NEW CODE*/
     }
     beforeMount() {
@@ -1889,16 +1889,17 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 if (devices.length > 1) {
                     this.defaultDevice = devices.find(device => device.isBack == true);
                 }
+                this.hasdefaultDevice = false;
+                if (this.defaultDevice) {
+                    this.hasdefaultDevice = true;
+                    this.startCamera({
+                        constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
+                    });
+                }
+                else {
+                    this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
+                }
             });
-            if (this.defaultDevice) {
-                this.hasdefaultDevice = true;
-                this.startCamera({
-                    constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
-                });
-            }
-            else {
-                this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
-            }
             this.userLang = navigator.language;
         });
     }
