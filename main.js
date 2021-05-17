@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "689aacb52b9d2058d176"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bc3062dd011bbb003866"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1858,7 +1858,8 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this._hasUserMedia = false;
         this._ctx = null;
         this.defaultMediaStreamConstraints = {
-            video: { pan: true, tilt: true, zoom: true }
+            video: true,
+            audio: false
         };
         this.width = "400";
         this.height = "300";
@@ -1958,35 +1959,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 this._video.srcObject = stream;
                 this._video.play();
                 this._hasUserMedia = true;
-                const videoTracks = stream.getVideoTracks();
-                console.log(`Using video device: ${videoTracks[0].label}`);
-                const [track] = stream.getVideoTracks();
-                const settings = track.getSettings();
-                console.log(`Using settings:`, settings);
-                const capabilities = track.getCapabilities();
-                console.log(`capabilities:`, capabilities);
-                for (const ptz of ['pan', 'tilt', 'zoom']) {
-                    // Check whether camera supports pan/tilt/zoom.
-                    if (!(ptz in settings)) {
-                        console.log(`Camera does not support ${ptz}.`);
-                        continue;
-                    }
-                    const input = document.querySelector(`input[name=${ptz}]`);
-                    input.min = capabilities[ptz].min;
-                    input.max = capabilities[ptz].max;
-                    input.step = capabilities[ptz].step;
-                    input.value = settings[ptz];
-                    input.disabled = false;
-                    input.oninput = (event) => __awaiter(this, void 0, void 0, function* () {
-                        try {
-                            const constraints = { advanced: [{ [ptz]: input.value }] };
-                            yield track.applyConstraints(constraints);
-                        }
-                        catch (err) {
-                            console.error('applyConstraints() failed: ', err);
-                        }
-                    });
-                }
             }
             catch (error) {
                 if (retryCount > 0) {
@@ -2039,16 +2011,17 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         });
     }
     checkIsBack(device) {
-        const isBack = device.label.toLocaleLowerCase().includes("back");
-        const isRear = device.label.toLocaleLowerCase().includes("rear");
-        const isEnvironment = device.label.toLocaleLowerCase().includes("environment");
+        const isBack = device.label.toLocaleLowerCase().includes("back") || device.label.toLocaleLowerCase().includes("arrière");
+        const isRear = device.label.toLocaleLowerCase().includes("rear") || device.label.toLocaleLowerCase().includes("achterzijde");
+        const isEnvironment = device.label.toLocaleLowerCase().includes("environment") || device.label.toLocaleLowerCase().includes("rück");
         const isSecond = device.label.toLocaleLowerCase().includes("1");
         return isBack || isRear || isEnvironment || isSecond;
     }
     checkIsFront(device) {
-        const isFront = device.label.toLocaleLowerCase().includes("front");
-        const isFacing = device.label.toLocaleLowerCase().includes("facing");
-        const isUser = device.label.toLocaleLowerCase().includes("user");
+        const isFront = device.label.toLocaleLowerCase().includes("front") || device.label.toLocaleLowerCase().includes("avant");
+        ;
+        const isFacing = device.label.toLocaleLowerCase().includes("facing") || device.label.toLocaleLowerCase().includes("voorzijde");
+        const isUser = device.label.toLocaleLowerCase().includes("user") || device.label.toLocaleLowerCase().includes("front");
         const isFirst = device.label.toLocaleLowerCase().includes("0");
         return isFront || isFacing || isUser || isFirst;
     }
@@ -4647,7 +4620,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('p', [_vm._v("Select Camera:")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('p', [_vm._v("Select Camera:")]), _vm._v(" "), _c('div', {
     staticClass: "select"
   }, [_c('select', {
     directives: [{
@@ -4697,31 +4670,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.takePhoto
     }
   }, [_vm._v("Take Photo")])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('p', [_vm._v("pan:")]), _vm._v(" "), _c('input', {
-    attrs: {
-      "name": "pan",
-      "type": "range",
-      "disabled": ""
-    }
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('p', [_vm._v("tilt:")]), _vm._v(" "), _c('input', {
-    attrs: {
-      "name": "tilt",
-      "type": "range",
-      "disabled": ""
-    }
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('p', [_vm._v("zoom:")]), _vm._v(" "), _c('input', {
-    attrs: {
-      "name": "zoom",
-      "type": "range",
-      "disabled": ""
-    }
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (true) {
   module.hot.accept()
