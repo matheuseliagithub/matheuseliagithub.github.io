@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "01bd3a1f032cabf45fea"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b53a03e815cf09324e2b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1861,11 +1861,9 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this._ctx = null;
         this.photo = null;
         this.screenshotFormat = "image/jpeg";
-        this.cameras = [];
         this.videoType = "videoinput";
         this.userLang = "";
         this.sources = [];
-        this.devices = [];
         this.defaultMediaStreamConstraints = {
             video: true,
             audio: false
@@ -1876,30 +1874,25 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.defaultDevice = null;
         this.deviceslength = 0;
         this.hasdefaultDevice = true;
-        /*NEW CODE*/
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
             yield navigator.mediaDevices.getUserMedia(this.defaultMediaStreamConstraints);
             this.getVideoDevices()
                 .then(devices => {
-                console.log('devices.length:', devices.length);
                 this.deviceslength = devices.length;
-                console.log('devices:', devices);
+                this.defaultDevice = devices.find(device => device.isFront == true);
                 if (devices.length > 1) {
                     this.defaultDevice = devices.find(device => device.isBack == true);
                 }
-                this.hasdefaultDevice = false;
-                if (this.defaultDevice) {
-                    this.hasdefaultDevice = true;
-                    this.startCamera({
-                        constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
-                    });
-                }
-                else {
-                    this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
-                }
+                this.startCamera({
+                    constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
+                });
+                console.log('videoDevices Value:', devices);
+                console.log('videoDevices Value:', this.videoDevices);
             });
+            this.getDevices2()
+                .then(this.gotDevices);
             this.userLang = navigator.language;
         });
     }
@@ -1920,21 +1913,14 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 this.videoDevices.push(device);
             }
         });
+        this.selected = this.defaultDevice.deviceId;
     }
     takePhoto() {
         if (!this._hasUserMedia) {
             return;
         }
         var canvas = this.getCanvas();
-        console.log(canvas);
         this.photo = canvas.toDataURL(this.screenshotFormat);
-    }
-    reload() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.getDevices2()
-                .then(this.gotDevices);
-            this.cameras = yield this.getVideoDevices();
-        });
     }
     getCanvas() {
         if (!this._hasUserMedia) {
@@ -1950,7 +1936,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         }
         return null;
     }
-    /*NEW CODE*/
     getVideoDevices() {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.supportsEnumerateDevices)
@@ -1968,15 +1953,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             catch (error) {
                 return Promise.reject(error);
             }
-        });
-    }
-    getDevices(type) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.supportsEnumerateDevices)
-                throw new Error("The browser does not support enumerateDevices");
-            const devices = yield navigator.mediaDevices.enumerateDevices();
-            console.log(devices);
-            return devices.filter(device => device.kind === type);
         });
     }
     startCamera({ constraints = this.defaultMediaStreamConstraints, retryCount = 10 } = {}) {
@@ -2005,9 +1981,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     supportsEnumerateDevices() {
         return !!(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices);
     }
-    get hasMultipleCameras() {
-        return this.cameras.length > 1;
-    }
     switchCamera(deviceId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -2019,6 +1992,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             }
             try {
                 if (deviceId) {
+                    this.selected = deviceId;
                     yield this.startCamera({
                         constraints: { video: { deviceId: { exact: deviceId } } }
                     });
@@ -4677,14 +4651,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": video.deviceId
       }
     }, [_vm._v("\n                " + _vm._s(video.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('button', {
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": _vm.reload
-    }
-  }, [_vm._v("Load Devices Info")]), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
+  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "videoinfo"
     }
@@ -4692,7 +4659,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("userLang: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("defaultDevice: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("deviceslength: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("hasdefaultDevice: " + _vm._s(_vm.hasdefaultDevice))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("userLang: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("defaultDevice: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("deviceslength: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("hasdefaultDevice: " + _vm._s(_vm.hasdefaultDevice))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
