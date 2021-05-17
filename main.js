@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ecefd918bfbe8ba1286a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bf3acba9fea9f1ff8a77"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1879,8 +1879,10 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     beforeMount() {
         this.getVideoDevices()
             .then(devices => {
+            console.log('devices.length:', devices.length);
+            console.log('devices:', devices);
             if (devices.length > 1) {
-                this.defaultDevice = devices.find(device => device.isFront == true);
+                this.defaultDevice = devices.find(device => device.isBack == true);
             }
         });
         if (this.defaultDevice) {
@@ -1889,17 +1891,13 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             });
         }
         this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
+        this.userLang = navigator.language;
     }
     handleChange(e) {
         if (e.target.options.selectedIndex > -1) {
             console.log('Selected Value:', this.selected);
             this.switchCamera(this.selected);
         }
-    }
-    mounted() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.userLang = navigator.language;
-        });
     }
     getDevices2() {
         return navigator.mediaDevices.enumerateDevices();
@@ -1918,6 +1916,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             return;
         }
         var canvas = this.getCanvas();
+        console.log(canvas);
         this.photo = canvas.toDataURL(this.screenshotFormat);
     }
     reload() {
@@ -1933,7 +1932,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         }
         if (this._ctx == null) {
             var canvas = document.createElement("canvas");
-            console.log(this._video);
             canvas.height = this._video.clientHeight;
             canvas.width = this._video.clientWidth;
             this._ctx = canvas.getContext("2d");
@@ -4643,7 +4641,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('p', [_vm._v("Select Camera:")]), _vm._v(" "), _c('div', {
     staticClass: "select"
   }, [_c('select', {
     directives: [{
@@ -4676,15 +4674,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.reload
     }
-  }, [_vm._v("Load Devices Info")]), _vm._v(" "), _c('h1', [_vm._v("All Devices Info")]), _vm._v(" "), _c('div', {
-    attrs: {
-      "id": "info"
-    }
-  }, [_c('ul', _vm._l((_vm.devices), function(device) {
-    return _c('li', {
-      key: device.deviceId
-    }, [_vm._v("\n                " + _vm._s(device.kind) + " + " + _vm._s(device.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("devices: " + _vm._s(_vm.devices))])]), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Load Devices Info")]), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "videoinfo"
     }
