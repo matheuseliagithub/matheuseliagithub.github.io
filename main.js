@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "129a72c4b160d1141e41"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f0bb3716576a3098c312"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1879,7 +1879,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 .then(devices => {
                 console.log(devices);
                 var filteredDevices = devices.filter(device => device.kind === "videoinput");
-                this.videoDevices = filteredDevices;
+                /*  this.videoDevices = filteredDevices*/
             })
                 .catch(error => console.error('getUserMedia() error:', error));
             navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -1911,6 +1911,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         devices.forEach(device => {
             if (device.kind === 'videoinput') {
                 this.sources.push(device);
+                this.videoDevices.push(device);
             }
         });
     }
