@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b53a03e815cf09324e2b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cf6222c62403f6aa000c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1854,20 +1854,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
     constructor() {
         super(...arguments);
-        this.width = "400";
-        this.height = "300";
         this._video = null;
         this._hasUserMedia = false;
         this._ctx = null;
+        this.defaultMediaStreamConstraints = {
+            video: true,
+            audio: false
+        };
+        this.width = "400";
+        this.height = "300";
         this.photo = null;
         this.screenshotFormat = "image/jpeg";
         this.videoType = "videoinput";
         this.userLang = "";
         this.sources = [];
-        this.defaultMediaStreamConstraints = {
-            video: true,
-            audio: false
-        };
         this.selected = null;
         this.videoDevices = [];
         this.deviceId = "";
@@ -1888,24 +1888,22 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 this.startCamera({
                     constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
                 });
-                console.log('videoDevices Value:', devices);
-                console.log('videoDevices Value:', this.videoDevices);
             });
-            this.getDevices2()
-                .then(this.gotDevices);
+            this.getEnumerateDevices()
+                .then(this.PopulateDropBox);
             this.userLang = navigator.language;
         });
     }
-    handleChange(e) {
+    CameraDeviceChanged(e) {
         if (e.target.options.selectedIndex > -1) {
             console.log('Selected Value:', this.selected);
             this.switchCamera(this.selected);
         }
     }
-    getDevices2() {
+    getEnumerateDevices() {
         return navigator.mediaDevices.enumerateDevices();
     }
-    gotDevices(devices) {
+    PopulateDropBox(devices) {
         this.sources = [];
         devices.forEach(device => {
             if (device.kind === 'videoinput') {
@@ -1926,15 +1924,12 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         if (!this._hasUserMedia) {
             return null;
         }
-        if (this._ctx == null) {
-            var canvas = document.createElement("canvas");
-            canvas.height = this._video.clientHeight;
-            canvas.width = this._video.clientWidth;
-            this._ctx = canvas.getContext("2d");
-            this._ctx.drawImage(this._video, 0, 0, canvas.width, canvas.height);
-            return canvas;
-        }
-        return null;
+        var canvas = document.createElement("canvas");
+        canvas.height = this._video.clientHeight;
+        canvas.width = this._video.clientWidth;
+        this._ctx = canvas.getContext("2d");
+        this._ctx.drawImage(this._video, 0, 0, canvas.width, canvas.height);
+        return canvas;
     }
     getVideoDevices() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -4643,7 +4638,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.handleChange]
+      }, _vm.CameraDeviceChanged]
     }
   }, _vm._l((_vm.videoDevices), function(video) {
     return _c('option', {
