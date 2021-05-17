@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ad3787989198eb94f6e9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9318612e66e9b4e96032"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1879,23 +1879,26 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         /*NEW CODE*/
     }
     beforeMount() {
-        this.getVideoDevices()
-            .then(devices => {
-            console.log('devices.length:', devices.length);
-            this.deviceslength = devices.length;
-            console.log('devices:', devices);
-            if (devices.length > 1) {
-                this.defaultDevice = devices.find(device => device.isBack == true);
-            }
-        });
-        if (this.defaultDevice) {
-            this.hasdefaultDevice = true;
-            this.startCamera({
-                constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
+        return __awaiter(this, void 0, void 0, function* () {
+            yield navigator.mediaDevices.getUserMedia(this.defaultMediaStreamConstraints);
+            this.getVideoDevices()
+                .then(devices => {
+                console.log('devices.length:', devices.length);
+                this.deviceslength = devices.length;
+                console.log('devices:', devices);
+                if (devices.length > 1) {
+                    this.defaultDevice = devices.find(device => device.isBack == true);
+                }
             });
-        }
-        this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
-        this.userLang = navigator.language;
+            if (this.defaultDevice) {
+                this.hasdefaultDevice = true;
+                this.startCamera({
+                    constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
+                });
+            }
+            this.startCamera({ constraints: this.defaultMediaStreamConstraints, retryCount: 10 });
+            this.userLang = navigator.language;
+        });
     }
     handleChange(e) {
         if (e.target.options.selectedIndex > -1) {
