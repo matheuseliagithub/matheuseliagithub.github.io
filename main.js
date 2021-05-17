@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "952f0a3fdbb071aa3901"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "129a72c4b160d1141e41"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1861,22 +1861,25 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this._ctx = null;
         this.photo = null;
         this.screenshotFormat = "image/jpeg";
-        /*NEW CODE*/
         this.cameras = [];
         this.devices = [];
         this.videoType = "videoinput";
         this.userLang = "";
         this.sources = [];
+        this.defaultMediaStreamConstraints = {
+            video: true
+        };
+        this.selected = null;
+        this.videoDevices = [];
         /*NEW CODE*/
     }
-    /*NEW CODE*/
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
             navigator.mediaDevices.enumerateDevices()
                 .then(devices => {
                 console.log(devices);
                 var filteredDevices = devices.filter(device => device.kind === "videoinput");
-                console.log(filteredDevices);
+                this.videoDevices = filteredDevices;
             })
                 .catch(error => console.error('getUserMedia() error:', error));
             navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -1885,10 +1888,15 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 this._video.srcObject = mediaStream;
                 this._video.play();
                 this._hasUserMedia = true;
-                console.log(mediaStream);
             })
                 .catch(error => console.error('getUserMedia() error:', error));
         });
+    }
+    handleChange(e) {
+        if (e.target.options.selectedIndex > -1) {
+            console.log('Selected Value:', this.selected);
+            this.switchCameraM(this.selected);
+        }
     }
     mounted() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1942,13 +1950,13 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     getVideoDevices() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                this.devices = yield navigator.mediaDevices.enumerateDevices();
-                return (yield this.getDevices(this.videoType))
+                const devices = yield navigator.mediaDevices.enumerateDevices();
+                return devices
+                    .filter(device => device.kind == "videoinput")
                     .map(device => {
                     const isFront = this.checkIsFront(device);
                     const isBack = this.checkIsBack(device);
-                    console.log(isFront);
-                    console.log(isBack);
+                    console.log(Object.assign({}, device, { isFront, isBack }));
                     return Object.assign({}, device, { isFront, isBack });
                 });
             }
@@ -1975,13 +1983,67 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     get hasMultipleCameras() {
         return this.cameras.length > 1;
     }
-    getInactiveCameras() {
-        console.log(this.cameras.filter(camera => !camera.active));
-        return this.cameras.filter(camera => !camera.active);
-    }
+    //getInactiveCameras() {
+    //    console.log(this.cameras.filter(camera => !camera.active)); 
+    //    return this.cameras.filter(camera => !camera.active);
+    //}
     switchCamera() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('switchCamera');
+        });
+    }
+    switchCameraM(deviceId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log(deviceId);
+                yield this.stopCamera();
+                console.log('stopCamera');
+            }
+            catch (error) {
+                return Promise.reject(error);
+            }
+            try {
+                if (deviceId) {
+                    console.log('deviceId');
+                    console.log(deviceId);
+                    yield this.startCamera({
+                        constraints: { video: { deviceId: { exact: deviceId } } }
+                    });
+                }
+            }
+            catch (error) {
+                return Promise.reject(error);
+            }
+        });
+    }
+    startCamera({ constraints = this.defaultMediaStreamConstraints, retryCount = 10 } = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.supportsUserMedia)
+                throw new Error("The Browser does not support getUserMedia");
+            try {
+                const stream = yield navigator.mediaDevices.getUserMedia(constraints);
+                this._video.srcObject = stream;
+            }
+            catch (error) {
+                if (retryCount > 0) {
+                    console.warn(`Error ${error.message}... retrying once more`);
+                    return this.startCamera({ constraints, retryCount: retryCount - 1 });
+                }
+                return Promise.reject(error);
+            }
+        });
+    }
+    stopCamera() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this._video.pause();
+            const stream = this._video.srcObject instanceof MediaStream && this._video.srcObject;
+            if (!stream)
+                return;
+            const tracks = stream.getTracks();
+            for (const track of tracks) {
+                track.stop();
+            }
+            this._video.srcObject = null;
         });
     }
     checkIsBack(device) {
@@ -4593,7 +4655,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "autoplay": "",
       "playsinline": ""
     }
-  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('button', {
+  }, [_vm._v("Video can not be displayed")]), _vm._v(" "), _c('div', {
+    staticClass: "select"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selected),
+      expression: "selected"
+    }],
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.handleChange]
+    }
+  }, _vm._l((_vm.videoDevices), function(video) {
+    return _c('option', {
+      domProps: {
+        "value": video.deviceId
+      }
+    }, [_vm._v("\n                " + _vm._s(video.label) + "\n            ")])
+  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('button', {
     attrs: {
       "type": "button"
     },
