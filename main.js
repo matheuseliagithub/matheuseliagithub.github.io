@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a71069fda1f56b4ff793"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "689aacb52b9d2058d176"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1858,8 +1858,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this._hasUserMedia = false;
         this._ctx = null;
         this.defaultMediaStreamConstraints = {
-            video: true,
-            audio: false
+            video: { pan: true, tilt: true, zoom: true }
         };
         this.width = "400";
         this.height = "300";
@@ -4699,9 +4698,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Take Photo")])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: "label"
-  }, [_vm._v("Pan:")]), _vm._v(" "), _c('input', {
+  return _c('div', [_c('p', [_vm._v("pan:")]), _vm._v(" "), _c('input', {
     attrs: {
       "name": "pan",
       "type": "range",
@@ -4709,9 +4706,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: "label"
-  }, [_vm._v("Tilt:")]), _vm._v(" "), _c('input', {
+  return _c('div', [_c('p', [_vm._v("tilt:")]), _vm._v(" "), _c('input', {
     attrs: {
       "name": "tilt",
       "type": "range",
@@ -4719,9 +4714,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: "label"
-  }, [_vm._v("Zoom:")]), _vm._v(" "), _c('input', {
+  return _c('div', [_c('p', [_vm._v("zoom:")]), _vm._v(" "), _c('input', {
     attrs: {
       "name": "zoom",
       "type": "range",
