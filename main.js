@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bf3acba9fea9f1ff8a77"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ad3787989198eb94f6e9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1874,18 +1874,22 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.videoDevices = [];
         this.deviceId = "";
         this.defaultDevice = null;
+        this.deviceslength = 0;
+        this.hasdefaultDevice = false;
         /*NEW CODE*/
     }
     beforeMount() {
         this.getVideoDevices()
             .then(devices => {
             console.log('devices.length:', devices.length);
+            this.deviceslength = devices.length;
             console.log('devices:', devices);
             if (devices.length > 1) {
                 this.defaultDevice = devices.find(device => device.isBack == true);
             }
         });
         if (this.defaultDevice) {
+            this.hasdefaultDevice = true;
             this.startCamera({
                 constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
             });
@@ -4682,7 +4686,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
-  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("userLang: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  })), _vm._v(" "), _c('p', [_vm._v("cameras: " + _vm._s(_vm.cameras))]), _vm._v(" "), _c('p', [_vm._v("hasMultipleCameras: " + _vm._s(_vm.hasMultipleCameras))])]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("userLang: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("defaultDevice: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("deviceslength: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("hasdefaultDevice: " + _vm._s(_vm.hasdefaultDevice))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
