@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bc3062dd011bbb003866"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "58ec4960797589b613fd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1873,6 +1873,9 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.deviceId = "";
         this.defaultDevice = null;
         this.deviceslength = 0;
+        this.supports = null;
+        this.capa = null;
+        this.settin = null;
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1891,9 +1894,10 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             this.getEnumerateDevices()
                 .then(this.populateDropBox);
             this.userLang = navigator.language;
+            this.supports = navigator.mediaDevices.getSupportedConstraints();
         });
     }
-    CameraDeviceChanged(e) {
+    deviceChanged(e) {
         if (e.target.options.selectedIndex > -1) {
             console.log('Selected Value:', this.selected);
             this.switchCamera(this.selected);
@@ -1955,6 +1959,37 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 throw new Error("The Browser does not support getUserMedia");
             try {
                 const stream = yield navigator.mediaDevices.getUserMedia(constraints);
+                const videoTracks = stream.getVideoTracks();
+                console.log(`Using video device: ${videoTracks[0].label}`);
+                const [track] = stream.getVideoTracks();
+                const settings = track.getSettings();
+                this.settin = track.getSettings();
+                console.log(`Using settings:`, settings);
+                const capabilities = track.getCapabilities();
+                this.capa = track.getCapabilities();
+                console.log(`capabilities:`, capabilities);
+                for (const ptz of ['pan', 'tilt', 'zoom']) {
+                    // Check whether camera supports pan/tilt/zoom.
+                    if (!(ptz in settings)) {
+                        console.log(`Camera does not support ${ptz}.`);
+                        continue;
+                    }
+                    const input = document.querySelector(`input[name=${ptz}]`);
+                    input.min = capabilities[ptz].min;
+                    input.max = capabilities[ptz].max;
+                    input.step = capabilities[ptz].step;
+                    input.value = settings[ptz];
+                    input.disabled = false;
+                    input.oninput = (event) => __awaiter(this, void 0, void 0, function* () {
+                        try {
+                            const constraints = { advanced: [{ [ptz]: input.value }] };
+                            yield track.applyConstraints(constraints);
+                        }
+                        catch (err) {
+                            console.error('applyConstraints() failed: ', err);
+                        }
+                    });
+                }
                 this._video = (this.$refs.videoref);
                 this._video.srcObject = stream;
                 this._video.play();
@@ -4638,7 +4673,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.CameraDeviceChanged]
+      }, _vm.deviceChanged]
     }
   }, _vm._l((_vm.videoDevices), function(video) {
     return _c('option', {
@@ -4654,7 +4689,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
