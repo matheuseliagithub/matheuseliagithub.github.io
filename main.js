@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ea52ebf82d5900002acc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bb064025c4181e953b00"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -4682,10 +4682,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": video.deviceId
       }
     }, [_vm._v("\n                " + _vm._s(video.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('input', {
+  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('label', {
+    staticClass: "btn",
     attrs: {
+      "for": "files"
+    }
+  }, [_vm._v("Take Photo Using Device App")]), _vm._v(" "), _c('input', {
+    staticStyle: {
+      "visibility": "hidden"
+    },
+    attrs: {
+      "id": "files",
       "type": "file",
-      "accept": "image/*",
+      "accept": "image/jpg",
       "capture": ""
     }
   }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
