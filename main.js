@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "58ec4960797589b613fd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f55cb0bb6db2ef6b6e6b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -2056,7 +2056,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         const isFront = device.label.toLocaleLowerCase().includes("front") || device.label.toLocaleLowerCase().includes("avant");
         ;
         const isFacing = device.label.toLocaleLowerCase().includes("facing") || device.label.toLocaleLowerCase().includes("voorzijde");
-        const isUser = device.label.toLocaleLowerCase().includes("user") || device.label.toLocaleLowerCase().includes("front");
+        const isUser = device.label.toLocaleLowerCase().includes("user");
         const isFirst = device.label.toLocaleLowerCase().includes("0");
         return isFront || isFacing || isUser || isFirst;
     }
@@ -4681,7 +4681,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": video.deviceId
       }
     }, [_vm._v("\n                " + _vm._s(video.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
+  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "file",
+      "accept": "image/*",
+      "capture": ""
+    }
+  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "videoinfo"
     }
