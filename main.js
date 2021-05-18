@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7b317676af9d54211e41"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e9977f5a5fb0140b1626"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1885,9 +1885,12 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             this.getVideoDevices()
                 .then(devices => {
                 this.deviceslength = devices.length;
-                this.defaultDevice = devices.find(device => device.isFront == true);
-                if (devices.length > 1) {
-                    this.defaultDevice = devices.find(device => device.isBack == true);
+                this.defaultDevice = devices.find(device => device.isBack == true);
+                if (!this.defaultDevice && devices.length > 1) {
+                    this.defaultDevice = devices.find(device => device.isFront == true);
+                }
+                if (!this.defaultDevice) {
+                    this.defaultDevice = devices.find(device => device.isFirst == true);
                 }
                 this.startCamera({
                     constraints: { video: { deviceId: { exact: this.defaultDevice.deviceId } } }
@@ -1954,7 +1957,8 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                     .map(device => {
                     const isFront = this.checkIsFront(device);
                     const isBack = this.checkIsBack(device);
-                    return { deviceId: device.deviceId, isFront, isBack };
+                    const isFirst = this.checkIsFirst(device);
+                    return { deviceId: device.deviceId, isFirst, isFront, isBack };
                 });
             }
             catch (error) {
@@ -2058,16 +2062,18 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         const isBack = device.label.toLocaleLowerCase().includes("back") || device.label.toLocaleLowerCase().includes("arrière");
         const isRear = device.label.toLocaleLowerCase().includes("rear") || device.label.toLocaleLowerCase().includes("achterzijde");
         const isEnvironment = device.label.toLocaleLowerCase().includes("environment") || device.label.toLocaleLowerCase().includes("rück");
-        const isSecond = device.label.toLocaleLowerCase().includes("1");
-        return isBack || isRear || isEnvironment || isSecond;
+        return isBack || isRear || isEnvironment;
     }
     checkIsFront(device) {
         const isFront = device.label.toLocaleLowerCase().includes("front") || device.label.toLocaleLowerCase().includes("avant");
         ;
         const isFacing = device.label.toLocaleLowerCase().includes("facing") || device.label.toLocaleLowerCase().includes("voorzijde");
         const isUser = device.label.toLocaleLowerCase().includes("user");
+        return isFront || isFacing || isUser;
+    }
+    checkIsFirst(device) {
         const isFirst = device.label.toLocaleLowerCase().includes("0");
-        return isFront || isFacing || isUser || isFirst;
+        return isFirst;
     }
 };
 CameraTestComponent = __decorate([
@@ -4690,7 +4696,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": video.deviceId
       }
     }, [_vm._v("\n                " + _vm._s(video.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('label', {
+  }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "photo"
+    }
+  }, [_c('button', {
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.takePhoto
+    }
+  }, [_vm._v("Take Photo")]), _vm._v(" "), _c('p'), _vm._v(" "), _c('img', {
+    attrs: {
+      "id": "img1",
+      "src": _vm.photo,
+      "alt": "",
+      "width": _vm.width,
+      "height": _vm.height
+    }
+  })]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('label', {
     staticClass: "btn btn-primary",
     attrs: {
       "for": "files"
@@ -4722,22 +4747,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: video.deviceId
     }, [_vm._v("\n                " + _vm._s(video.kind) + " + " + _vm._s(video.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('p', [_vm._v("vendor: " + _vm._s(_vm.vendor))]), _vm._v(" "), _c('p', [_vm._v("userAgent: " + _vm._s(_vm.userAgent))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
-    attrs: {
-      "id": "img1",
-      "src": _vm.photo,
-      "alt": "",
-      "width": _vm.width,
-      "height": _vm.height
-    }
-  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('button', {
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": _vm.takePhoto
-    }
-  }, [_vm._v("Take Photo")])])
+  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('p', [_vm._v("vendor: " + _vm._s(_vm.vendor))]), _vm._v(" "), _c('p', [_vm._v("userAgent: " + _vm._s(_vm.userAgent))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (true) {
