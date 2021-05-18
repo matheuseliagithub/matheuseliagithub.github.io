@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f55cb0bb6db2ef6b6e6b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "98b448a3ab60b72cd6ff"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1876,6 +1876,8 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.supports = null;
         this.capa = null;
         this.settin = null;
+        this.userAgent = null;
+        this.vendor = null;
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1895,6 +1897,8 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
                 .then(this.populateDropBox);
             this.userLang = navigator.language;
             this.supports = navigator.mediaDevices.getSupportedConstraints();
+            this.userAgent = navigator.userAgent;
+            this.vendor = navigator.vendor;
         });
     }
     deviceChanged(e) {
@@ -4695,7 +4699,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: source.deviceId
     }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
+  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('p', [_vm._v("vendor: " + _vm._s(_vm.vendor))]), _vm._v(" "), _c('p', [_vm._v("userAgent: " + _vm._s(_vm.userAgent))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
       "src": _vm.photo,
