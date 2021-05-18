@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "98b448a3ab60b72cd6ff"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ea52ebf82d5900002acc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1867,7 +1867,6 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.screenshotFormat = "image/jpeg";
         this.videoType = "videoinput";
         this.userLang = "";
-        this.sources = [];
         this.selected = null;
         this.videoDevices = [];
         this.deviceId = "";
@@ -1911,14 +1910,12 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         return navigator.mediaDevices.enumerateDevices();
     }
     populateDropBox(devices) {
-        this.sources = [];
         devices.forEach(device => {
-            if (device.kind === 'videoinput') {
-                this.sources.push(device);
+            if (device.kind === this.videoType) {
                 this.videoDevices.push(device);
             }
+            this.selected = this.defaultDevice.deviceId;
         });
-        this.selected = this.defaultDevice.deviceId;
     }
     takePhoto() {
         if (!this._hasUserMedia) {
@@ -4695,10 +4692,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "videoinfo"
     }
-  }, [_c('p', [_vm._v("sources: " + _vm._s(_vm.sources))]), _vm._v(" "), _c('ul', _vm._l((_vm.sources), function(source) {
+  }, [_c('p', [_vm._v("videoDevices: " + _vm._s(_vm.videoDevices))]), _vm._v(" "), _c('ul', _vm._l((_vm.videoDevices), function(video) {
     return _c('li', {
-      key: source.deviceId
-    }, [_vm._v("\n                " + _vm._s(source.kind) + " + " + _vm._s(source.label) + "\n            ")])
+      key: video.deviceId
+    }, [_vm._v("\n                " + _vm._s(video.kind) + " + " + _vm._s(video.label) + "\n            ")])
   }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('p', [_vm._v("vendor: " + _vm._s(_vm.vendor))]), _vm._v(" "), _c('p', [_vm._v("userAgent: " + _vm._s(_vm.userAgent))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('img', {
     attrs: {
       "id": "img1",
