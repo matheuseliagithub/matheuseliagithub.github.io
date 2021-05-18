@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e5c4a9cae8283d7b276d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7b317676af9d54211e41"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1035,7 +1035,7 @@ exports = module.exports = __webpack_require__(7)();
 
 
 // module
-exports.push([module.i, "@media (max-width: 767px) {\r\n    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */\r\n    body {\r\n        padding-top: 50px;\r\n    }\r\n}", ""]);
+exports.push([module.i, "@media (max-width: 767px) {\r\n    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */\r\n    body {\r\n        padding-top: 50px;\r\n    }\r\n\r\n    .modal-label {\r\n        display: inline-block;\r\n        line-height: 2.2em;\r\n        padding: 0 0.62em;\r\n        border: 1px solid #666;\r\n        border-radius: 0.25em;\r\n        background-image: linear-gradient( to bottom, #fff, #ccc );\r\n        box-shadow: inset 0 0 0.1em #fff, 0.2em 0.2em 0.2em rgba( 0, 0, 0, 0.3 );\r\n        font-family: arial, sans-serif;\r\n        font-size: 0.8em;\r\n    }\r\n}", ""]);
 
 // exports
 
@@ -1919,7 +1919,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
     }
     populateDropBox(devices) {
         devices.forEach(device => {
-            if (device.kind === this.videoType) {
+            if (device.kind === 'videoinput') {
                 this.videoDevices.push(device);
             }
             this.selected = this.defaultDevice.deviceId;
@@ -4691,7 +4691,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v("\n                " + _vm._s(video.label) + "\n            ")])
   }))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('label', {
-    staticClass: "btn",
+    staticClass: "btn btn-primary",
     attrs: {
       "for": "files"
     }
