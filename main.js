@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bb064025c4181e953b00"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "db2a73d0acef50d924de"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1877,6 +1877,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.settin = null;
         this.userAgent = null;
         this.vendor = null;
+        this.url = null;
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1904,6 +1905,13 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         if (e.target.options.selectedIndex > -1) {
             console.log('Selected Value:', this.selected);
             this.switchCamera(this.selected);
+        }
+    }
+    inputChanged(e) {
+        const [file] = e.srcElement.files;
+        if (file) {
+            console.log(file);
+            this.url = URL.createObjectURL(file);
         }
     }
     getEnumerateDevices() {
@@ -4696,8 +4704,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "file",
       "accept": "image/jpg",
       "capture": ""
+    },
+    on: {
+      "change": _vm.inputChanged
     }
-  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.url) ? _c('img', {
+    attrs: {
+      "src": _vm.url
+    }
+  }) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "videoinfo"
     }
