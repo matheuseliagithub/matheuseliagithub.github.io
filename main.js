@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "db2a73d0acef50d924de"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e5c4a9cae8283d7b276d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -4710,7 +4710,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.url) ? _c('img', {
     attrs: {
-      "src": _vm.url
+      "src": _vm.url,
+      "width": "400",
+      "height": "300"
     }
   }) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
