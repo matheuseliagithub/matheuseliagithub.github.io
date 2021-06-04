@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e9977f5a5fb0140b1626"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "13ebad46c25ed6bc2829"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -4727,8 +4727,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "files",
       "type": "file",
-      "accept": "image/jpg",
-      "capture": ""
+      "accept": "image/jpg"
     },
     on: {
       "change": _vm.inputChanged
