@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "13ebad46c25ed6bc2829"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3279caff8d0c93cab637"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1878,6 +1878,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.userAgent = null;
         this.vendor = null;
         this.url = null;
+        this.selectedFile = null;
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1914,6 +1915,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         const [file] = e.srcElement.files;
         if (file) {
             console.log(file);
+            this.selectedFile = file;
             this.url = URL.createObjectURL(file);
         }
     }
@@ -4738,7 +4740,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "400",
       "height": "300"
     }
-  }) : _vm._e(), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
+  }) : _vm._e(), _vm._v(" "), _c('p', [_vm._v("Image Info: " + _vm._s(_vm.selectedFile))]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h1', [_vm._v("Video Devices Info")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "videoinfo"
     }
