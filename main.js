@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8aafa3a3e5ad336ba686"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3b301e9eab6f732d9e01"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1912,7 +1912,7 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             this.userAgent = navigator.userAgent;
             this.vendor = navigator.vendor;
             this.platform = navigator.platform;
-            this.maxTouchPoints = navigator.msMaxTouchPoints;
+            this.maxTouchPoints = navigator.maxTouchPoints;
             this.pointerCoarse = window.matchMedia("(pointer: coarse)").matches;
             this.pointerFine = window.matchMedia("(pointer: fine)").matches;
             this.pointerNone = window.matchMedia("(pointer: none)").matches;
