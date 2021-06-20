@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c314ea5b251993626144"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8aafa3a3e5ad336ba686"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1882,6 +1882,11 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
         this.url = null;
         this.lastModified = null;
         this.lastModifiedDate = null;
+        this.pointerCoarse = null;
+        this.pointerFine = null;
+        this.pointerNone = null;
+        this.hoverHover = null;
+        this.hoverNone = null;
     }
     beforeMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1907,7 +1912,12 @@ let CameraTestComponent = class CameraTestComponent extends __WEBPACK_IMPORTED_M
             this.userAgent = navigator.userAgent;
             this.vendor = navigator.vendor;
             this.platform = navigator.platform;
-            this.maxTouchPoints = navigator.maxTouchPoints;
+            this.maxTouchPoints = navigator.msMaxTouchPoints;
+            this.pointerCoarse = window.matchMedia("(pointer: coarse)").matches;
+            this.pointerFine = window.matchMedia("(pointer: fine)").matches;
+            this.pointerNone = window.matchMedia("(pointer: none)").matches;
+            this.hoverHover = window.matchMedia("(hover: hover)").matches;
+            this.hoverNone = window.matchMedia("(hover: none)").matches;
         });
     }
     deviceChanged(e) {
@@ -4754,7 +4764,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       key: video.deviceId
     }, [_vm._v("\n                " + _vm._s(video.kind) + " + " + _vm._s(video.label) + "\n            ")])
-  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('p', [_vm._v("vendor: " + _vm._s(_vm.vendor))]), _vm._v(" "), _c('p', [_vm._v("userAgent: " + _vm._s(_vm.userAgent))]), _vm._v(" "), _c('p', [_vm._v("platform: " + _vm._s(_vm.platform))]), _vm._v(" "), _c('p', [_vm._v("maxTouchPoints: " + _vm._s(_vm.maxTouchPoints))])])
+  }))]), _vm._v(" "), _c('h1', [_vm._v("Other Info")]), _vm._v(" "), _c('p', [_vm._v("User Language: " + _vm._s(_vm.userLang))]), _vm._v(" "), _c('p', [_vm._v("Default Device: " + _vm._s(_vm.defaultDevice))]), _vm._v(" "), _c('p', [_vm._v("Number of Cameras: " + _vm._s(_vm.deviceslength))]), _vm._v(" "), _c('p', [_vm._v("supports: " + _vm._s(_vm.supports))]), _vm._v(" "), _c('p', [_vm._v("capabilities: " + _vm._s(_vm.capa))]), _vm._v(" "), _c('p', [_vm._v("settings: " + _vm._s(_vm.settin))]), _vm._v(" "), _c('p', [_vm._v("vendor: " + _vm._s(_vm.vendor))]), _vm._v(" "), _c('p', [_vm._v("userAgent: " + _vm._s(_vm.userAgent))]), _vm._v(" "), _c('p', [_vm._v("platform: " + _vm._s(_vm.platform))]), _vm._v(" "), _c('p', [_vm._v("maxTouchPoints: " + _vm._s(_vm.maxTouchPoints))]), _vm._v(" "), _c('p', [_vm._v("pointerCoarse: " + _vm._s(_vm.pointerCoarse))]), _vm._v(" "), _c('p', [_vm._v("pointerFine: " + _vm._s(_vm.pointerFine))]), _vm._v(" "), _c('p', [_vm._v("pointerNone: " + _vm._s(_vm.pointerNone))]), _vm._v(" "), _c('p', [_vm._v("hoverHover: " + _vm._s(_vm.hoverHover))]), _vm._v(" "), _c('p', [_vm._v("hoverNone: " + _vm._s(_vm.hoverNone))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (true) {
